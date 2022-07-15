@@ -511,7 +511,8 @@
                     </div>
 
                     <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-                        <form action="" netlify method="post" role="form" class="php-email-form">
+                        <form name="contact" method="POST" data-netlify="true">
+                            <input type="hidden" name="form-name" value="contact">
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="name">Your Name</label>
@@ -559,8 +560,27 @@
             </div>
         </div>
     </footer>
-    <!-- End  Footer -->
+    <!-- End Footer -->
+    <script>
+        document
+            .querySelector("form")
+            .addEventListener("submit", handleSubmit);
 
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            let myForm = document.getElementById("pizzaOrder");
+            let formData = new FormData(myForm);
+            fetch("/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: new URLSearchParams(formData).toString(),
+                })
+                .then(() => console.log("Form successfully submitted"))
+                .catch((error) => alert(error));
+        };
+    </script>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
